@@ -152,7 +152,7 @@ public List loadData(){
 
 
 
-    public List loadSelectedData(String userName){
+    public Cursor loadSelectedData(String userName, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
 // Define a projection that specifies which columns from the database
@@ -165,8 +165,8 @@ public List loadData(){
         };
 
 // Filter results WHERE "title" = 'My Title'
-        String selection =  FeedReaderContract.User.COLUMN_NAME + " LIKE ?";
-        String[] selectionArgs = { userName };
+        String selection = FeedReaderContract.User.COLUMN_NAME + " LIKE ?" + " AND " + FeedReaderContract.User.COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = {userName, password};
 
 // How you want the results sorted in the resulting Cursor
         String sortOrder =
@@ -181,18 +181,8 @@ public List loadData(){
                 null,                   // don't filter by row groups
                 sortOrder               // The sort order
         );
-        List userData = new ArrayList<>();
-        while(cursor.moveToNext()) {
 
-            String user = cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.User.COLUMN_NAME));
-            String password = cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.User.COLUMN_PASSWORD));
-            String type = cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.User.COLUMN_TYPE));
-            userData.add(user);
-            userData.add(password);
-            userData.add(type );
-        }
-        cursor.close();
-        return userData;
+        return cursor;
 
     }
     ///////////////////////////////////////////////  MESSAGE  ////////////////////////////////////////////
