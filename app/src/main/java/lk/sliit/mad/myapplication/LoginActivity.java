@@ -53,13 +53,13 @@ public class LoginActivity extends AppCompatActivity {
 
                       if(type.equals("Student")){
                           Intent intent = new Intent(LoginActivity.this,StudentActivity.class);
-                          intent.putExtra("UN",etNameRegister.getText().toString());
+                          intent.putExtra("Name",etNameRegister.getText().toString());
                           Toast.makeText(LoginActivity.this, "Student Login Successful", Toast.LENGTH_SHORT).show();
                           startActivity(intent);
 
                       }else {
                           Intent intent = new Intent(LoginActivity.this,TeacherActivity.class);
-                          intent.putExtra("UN",etNameRegister.getText().toString());
+                          intent.putExtra("Name",etNameRegister.getText().toString());
                           Toast.makeText(LoginActivity.this, "Teacher Login Successful", Toast.LENGTH_SHORT).show();
                           startActivity(intent);
 
