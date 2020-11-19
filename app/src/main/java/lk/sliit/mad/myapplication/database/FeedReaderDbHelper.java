@@ -186,7 +186,7 @@ public List loadData(){
     ///////////////////////////////////////////////  MESSAGE  ////////////////////////////////////////////
 
     //Add Message Data
-    public void addMessage(String user, String subject, String message) {
+    public long addMessage(String user, String subject, String message) {
         // Gets the data repository in write mode
         SQLiteDatabase db = getWritableDatabase();
 
@@ -198,7 +198,7 @@ public List loadData(){
 
 // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(FeedReaderContract.Message.TABLE_NAME, null, values);
-
+return newRowId;
     }
 
     //Update Message Data
@@ -222,6 +222,4 @@ public List loadData(){
 
 
     }
-
-
 }
