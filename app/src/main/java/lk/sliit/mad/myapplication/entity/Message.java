@@ -16,6 +16,11 @@ public class Message {
     public Message() {
     }
 
+    public Message(String mss, String sub) {
+        this.subject = sub;
+        this.message = mss;
+    }
+
     public long getKey() {
         return key;
     }
