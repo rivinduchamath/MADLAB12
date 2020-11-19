@@ -9,6 +9,8 @@ import android.provider.BaseColumns;
 import java.util.ArrayList;
 import java.util.List;
 
+import lk.sliit.mad.myapplication.entity.Message;
+
 public class FeedReaderDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
@@ -220,6 +222,48 @@ return newRowId;
                 selection,
                 selectionArgs);
 
+
+    }
+
+
+
+    public ArrayList loadMessageData(){
+        SQLiteDatabase db = getReadableDatabase();
+
+// Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        String[] projection = {
+                BaseColumns._ID,
+                FeedReaderContract.Message.COLUMN_USER,
+                FeedReaderContract.Message.COLUMN_SUBJECT,
+                FeedReaderContract.Message.COLUMN_MESSAGE
+        };
+
+
+// How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                FeedReaderContract.Message.COLUMN_SUBJECT + " ASC";
+
+        Cursor cursor = db.query(
+                FeedReaderContract.Message.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+        ArrayList itemIds = new ArrayList<>();
+        while(cursor.moveToNext()) {
+
+            String user = cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.Message.COLUMN_USER));
+            String subject = cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.Message.COLUMN_SUBJECT));
+            String msg = cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.Message.COLUMN_MESSAGE));
+            Message message = new Message(user,subject,msg);
+            itemIds.add(message);
+        }
+        cursor.close();
+        return itemIds;
 
     }
 }
